@@ -102,7 +102,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (<= 5.1)
-  bcrypt
+  bcrypt (~> 3.1.2)
   capybara
   pry
   rack-test
@@ -117,4 +117,4 @@ DEPENDENCIES
   tux
 
 BUNDLED WITH
-   2.0.1
+   2.0.2
