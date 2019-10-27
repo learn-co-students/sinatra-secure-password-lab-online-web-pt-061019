@@ -1,5 +1,6 @@
 require "./config/environment"
 require "./app/models/user"
+require 'pry'
 class ApplicationController < Sinatra::Base
 
   configure do
@@ -17,8 +18,17 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/signup" do
-    #your code here
-
+    @user = User.new
+    @user.username = params[:username]
+    @user.password = params[:password]
+    if @user.username == ""
+      redirect '/failure'
+    elsif @user.password == nil
+      redirect '/failure'
+    else
+      @user.save
+      redirect '/login'
+    end
   end
 
   get '/account' do
@@ -32,7 +42,13 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/login" do
-    ##your code here
+    @user = User.find_by(:username => params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect '/account'
+    else
+      redirect '/failure'
+    end
   end
 
   get "/failure" do
